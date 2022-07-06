@@ -6,6 +6,7 @@ import { FetchApiDataService } from '../fetch-api-data.service'
   templateUrl: './movie-card.component.html',
   styleUrls: ['./movie-card.component.scss']
 })
+
 export class MovieCardComponent {
   movies: any[] = [];
   constructor(public fetchApiData: FetchApiDataService) { }
