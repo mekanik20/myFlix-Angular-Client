@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { FetchApiDataService } from '../fetch-api-data.service'
+import { GenreComponent } from '../genre/genre.component';
+import { DirectorComponent } from '../director/director.component';
+import { SynopsisComponent } from '../synopsis/synopsis.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-movie-card',
@@ -7,12 +13,19 @@ import { FetchApiDataService } from '../fetch-api-data.service'
   styleUrls: ['./movie-card.component.scss']
 })
 
-export class MovieCardComponent {
+export class MovieCardComponent implements OnInit {
   movies: any[] = [];
-  constructor(public fetchApiData: FetchApiDataService) { }
+  favoriteMovies: any[] = [];
+
+  constructor(
+    public fetchApiData: FetchApiDataService,
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.getMovies();
+    this.getFavoriteMovies();
   }
 
   getMovies(): void {
@@ -21,5 +34,68 @@ export class MovieCardComponent {
       console.log(this.movies);
       return this.movies;
     });
+  }
+
+  getFavoriteMovies(): void {
+    this.fetchApiData.getFavoriteMovies().subscribe((resp: any) => {
+      this.favoriteMovies = resp;
+      console.log(this.favoriteMovies);
+      return this.getfavoriteMovies;
+    })
+  }
+  isFav(id: string): boolean {
+    return this.getFavoriteMovies.includes(id)
+  }
+
+  //opens genre dialog
+  openGenreDialog(name: string, description: string): void {
+    this.openGenreDialog.open(GenreComponent, {
+      data: {
+        Name: name,
+        Description: description
+      },
+      width: '500px'
+    });
+  }
+
+  //opens director dialog
+  openDirectorDialog(name: string, bio: string, birthday: Date): void {
+    this.openGenreDialog.open(DirectorComponent, {
+      data: {
+        Name: name,
+        Bio: bio,
+        Birthday: birthday,
+      },
+      width: '500px'
+    });
+
+    //opens synopsis dialog
+    openSynopsisDialog(title: string, description: string): void {
+      this.dialog.open(SynopsisComponent, {
+        data: {
+          Title: title,
+          Description: description,
+        },
+        width: '500px'
+      });
+    }
+
+    //adds movie to user's favorites
+    addToFavoriteMovies(id: string): void {
+      console.log(id);
+      this.fetchApiData.addFavoriteMovie(id).subscribe((result) => {
+        console.log(result);
+        this.ngOnInit();
+      })
+    }
+
+    //removes a movie from user's favorites
+    removeFromFavoriteMovies(id: string): void {
+      console.log(id);
+      this.fetchApiData.removeFavoriteMovies(id).subscribe((result) => {
+        console.log(result);
+        this.ngOnInit();
+      })
+    }
   }
 }
