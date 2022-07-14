@@ -37,16 +37,20 @@ export class MovieCardComponent implements OnInit {
   }
 
   getFavoriteMovies(): void {
-    this.fetchApiData.getFavoriteMovies().subscribe((resp: any) => {
-      this.favoriteMovies = resp;
-      console.log(this.favoriteMovies);
+    this.fetchApiData.getUser().subscribe((resp: any) => {
+      this.favoriteMovies = resp.FavoriteMovies;
       return this.favoriteMovies;
     });
   }
 
+  //create isFav function
+  isFav(id: string): boolean {
+    return this.favoriteMovies.includes(id);
+  }
+
   //opens genre dialog
   openGenreDialog(name: string, description: string): void {
-    this.openGenreDialog.open(GenreComponent, {
+    this.dialog.open(GenreComponent, {
       data: {
         Name: name,
         Description: description
@@ -57,7 +61,7 @@ export class MovieCardComponent implements OnInit {
 
   //opens director dialog
   openDirectorDialog(name: string, bio: string, birthday: Date): void {
-    this.openGenreDialog.open(DirectorComponent, {
+    this.dialog.open(DirectorComponent, {
       data: {
         Name: name,
         Bio: bio,
@@ -65,34 +69,34 @@ export class MovieCardComponent implements OnInit {
       },
       width: '500px'
     });
+  }
 
-    //opens synopsis dialog
-    openSynopsisDialog(title: string, description: string): void {
-      this.dialog.open(SynopsisComponent, {
-        data: {
-          Title: title,
-          Description: description,
-        },
-        width: '500px'
-      });
-    }
+  //opens synopsis dialog
+  openSynopsisDialog(title: string, description: string): void {
+    this.dialog.open(SynopsisComponent, {
+      data: {
+        Title: title,
+        Description: description,
+      },
+      width: '500px'
+    });
+  }
 
-    //adds movie to user's favorites
-    addToFavoriteMovies(id: string): void {
-      console.log(id);
-      this.fetchApiData.addFavoriteMovie(id).subscribe((result) => {
-        console.log(result);
-        this.ngOnInit();
-      })
-    }
+  //adds movie to user's favorites
+  addToFavoriteMovies(id: string): void {
+    console.log(id);
+    this.fetchApiData.addFavoriteMovie(id).subscribe((result) => {
+      console.log(result);
+      this.ngOnInit();
+    })
+  }
 
-    //removes a movie from user's favorites
-    removeFromFavoriteMovies(id: string): void {
-      console.log(id);
-      this.fetchApiData.removeFavoriteMovies(id).subscribe((result) => {
-        console.log(result);
-        this.ngOnInit();
-      })
-    }
+  //removes a movie from user's favorites
+  removeFromFavoriteMovies(id: string): void {
+    console.log(id);
+    this.fetchApiData.removeFavoriteMovie(id).subscribe((result) => {
+      console.log(result);
+      this.ngOnInit();
+    })
   }
 }
