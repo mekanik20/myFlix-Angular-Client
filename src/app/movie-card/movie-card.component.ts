@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { FetchApiDataService } from '../fetch-api-data.service'
+//import { Title } from '@angular/platform-browser';
+import { FetchApiDataService } from '../fetch-api-data.service';
 import { GenreComponent } from '../genre/genre.component';
 import { DirectorComponent } from '../director/director.component';
 import { SynopsisComponent } from '../synopsis/synopsis.component';
@@ -40,11 +40,8 @@ export class MovieCardComponent implements OnInit {
     this.fetchApiData.getFavoriteMovies().subscribe((resp: any) => {
       this.favoriteMovies = resp;
       console.log(this.favoriteMovies);
-      return this.getfavoriteMovies;
-    })
-  }
-  isFav(id: string): boolean {
-    return this.getFavoriteMovies.includes(id)
+      return this.favoriteMovies;
+    });
   }
 
   //opens genre dialog
