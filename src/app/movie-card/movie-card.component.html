@@ -7,17 +7,17 @@
     <img src={{movie.ImagePath}} alt={{movie.Title}} />
     <mat-card-actions>
 
-      <button mat-button color="primary" mat-button (click)="openGenreDialog(
+      <button mat-button color="primary" mat-button(click)="openGenreDialog(
         movie.Genre.Name, movie.Genre.Description)">
         Genre
       </button>
 
-      <button mat-button color="primary" mat-button (click)="openDirectorDialog(
+      <button mat-button color="primary" mat-button(click)="openDirectorDialog(
         movie.Director.Name, movie.Director.Birthday, movie.Director.Bio)">
         Director
       </button>
 
-      <button mat-button color="primary" mat-button (click)="openSynopsisDiaglog(
+      <button mat-button color="primary" mat-button(click)="openSynopsisDialog(
         movie.Description)">
         Synopsis
       </button>
