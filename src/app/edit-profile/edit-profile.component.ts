@@ -28,10 +28,14 @@ export class EditProfileComponent implements OnInit {
     console.log(this.userData);
     this.fetchApiData.editUser(this.userData).subscribe((result) => {
       this.dialogRef.close();
+      localStorage.setItem('user', result.Username);
       console.log(result);
       this.snackBar.open('Successfully updated profile!', 'OK', {
-        duration: 2000
+        duration: 2000,
       });
-    })
+      setTimeout(() => {
+        window.location.reload();
+      });
+    });
   }
 }
