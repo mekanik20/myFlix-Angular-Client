@@ -28,6 +28,11 @@ export class MovieCardComponent implements OnInit {
     this.getFavoriteMovies();
   }
 
+  /**
+   * Gets movies from api
+   * @returns movies array
+   * @function getAllMovies
+   */
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       this.movies = resp;
@@ -36,6 +41,11 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Gets favorite movie(s) from api
+   * @returns favorite movies array
+   * @function getFavoriteMovies
+   */
   getFavoriteMovies(): void {
     this.fetchApiData.getUser().subscribe((resp: any) => {
       this.favoriteMovies = resp.FavoriteMovies;
@@ -43,12 +53,20 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  //create isFav function
+  /**
+   * create isFav function to check if movie is in user's list already
+   * @param id
+   * @returns true if movie is already a favorite movie, else false
+   */
   isFav(id: string): boolean {
     return this.favoriteMovies.includes(id);
   }
 
-  //opens genre dialog
+  /**
+   * opens genre dialog from GenreComponent
+   * @param name
+   * @param description
+   */
   openGenreDialog(name: string, description: string): void {
     this.dialog.open(GenreComponent, {
       data: {
@@ -59,7 +77,12 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  //opens director dialog
+  /**
+   * opens director dialog from DirectorComponent
+   * @param name
+   * @param bio
+   * @param birthday
+   */
   openDirectorDialog(name: string, bio: string, birthday: Date): void {
     this.dialog.open(DirectorComponent, {
       data: {
@@ -71,7 +94,11 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  //opens synopsis dialog
+  /**
+   * opens synopsis dialog from SynopsisComponent
+   * @param title
+   * @param description
+   */
   openSynopsisDialog(title: string, description: string): void {
     this.dialog.open(SynopsisComponent, {
       data: {
@@ -82,7 +109,11 @@ export class MovieCardComponent implements OnInit {
     });
   }
 
-  //adds movie to user's favorites
+  /**
+   * adds movie to user's favorites
+   * @param id
+   * @function addFavoriteMovie
+   */
   addToFavoriteMovies(id: string): void {
     console.log(id);
     this.fetchApiData.addFavoriteMovie(id).subscribe((result) => {
@@ -91,7 +122,11 @@ export class MovieCardComponent implements OnInit {
     })
   }
 
-  //removes a movie from user's favorites
+  /**
+   * removes a movie from user's favorites
+   * @param id
+   * @function removeFavoriteMovie
+   */
   removeFromFavoriteMovies(id: string): void {
     console.log(id);
     this.fetchApiData.removeFavoriteMovie(id).subscribe((result) => {
